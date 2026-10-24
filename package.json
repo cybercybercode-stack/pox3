@@ -1,0 +1,22 @@
+{
+  "name": "telegram_admin_bot_netlify",
+  "version": "1.0.0",
+  "description": "Telegram Admin Bot for PostgreSQL on Netlify Functions",
+  "main": "src/local.js",
+  "scripts": {
+    "start": "node src/local.js",
+    "dev": "node src/local.js",
+    "set-webhook": "node src/setWebhook.js",
+    "build": "echo \"Netlify deployment ready\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^18.0.9",
+    "exceljs": "^4.4.0",
+    "grammy": "^1.46.0",
+    "pg": "^8.23.1"
+  }
+}

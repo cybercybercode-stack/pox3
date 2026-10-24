@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>بوت إدارة قاعدة البيانات | Layal Neon DB Admin Bot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(22, 30, 46, 0.75);
+      --border: rgba(255, 255, 255, 0.08);
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --emerald: #10b981;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* خلفية ضوئية متحركة ناعمة */
+    body::before {
+      content: '';
+      position: absolute;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+      top: 10%;
+      left: 15%;
+      filter: blur(60px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 70%);
+      bottom: 15%;
+      right: 15%;
+      filter: blur(60px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 640px;
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--emerald);
+      border-radius: 9999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      animation: pulse-ring 1.8s infinite;
+    }
+
+    @keyframes pulse-ring {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 32px;
+      text-align: right;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      transition: all 0.2s ease;
+    }
+
+    .feature-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-2px);
+    }
+
+    .feature-card .icon {
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+    }
+
+    .feature-card .title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .feature-card .desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 15px 24px;
+      background: var(--primary);
+      color: #fff;
+      font-family: inherit;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
+    }
+
+    .action-btn:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 12px 30px -5px rgba(59, 130, 246, 0.6);
+      transform: translateY(-1px);
+    }
+
+    .result-box {
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      font-size: 0.88rem;
+      font-family: monospace;
+      text-align: left;
+      direction: ltr;
+      display: none;
+      word-break: break-all;
+    }
+
+    .footer {
+      margin-top: 28px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="status-badge">
+      <span class="pulse"></span>
+      مستضاف بنجاح على Netlify Functions (Serverless)
+    </div>
+
+    <h1>🤖 بوت إدارة قاعدة البيانات (Layal)</h1>
+    <p class="subtitle">
+      بوت تلجرام متكامل وسريع لإدارة رموز التفعيل، سجل الطلبات، استعراض وتصدير الجداول إلى Excel وتنفيذ استعلامات SQL عبر Neon PostgreSQL.
+    </p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="icon">🔑</div>
+        <div class="title">رموز التفعيل</div>
+        <div class="desc">توليد، تمديد بالساعات والأيام، فك ربط الهاتف</div>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📊</div>
+        <div class="title">إحصائيات فورية</div>
+        <div class="desc">لوحة تحكم حية لأعداد المشتركين ونسب الطلبات</div>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📥</div>
+        <div class="title">تصدير Excel</div>
+        <div class="desc">تصدير الجداول والطلبات كملفات .xlsx منسقة</div>
+      </div>
+      <div class="feature-card">
+        <div class="icon">⚡</div>
+        <div class="title">محطة SQL الحية</div>
+        <div class="desc">تنفيذ استعلامات قاعدة البيانات مباشرة بأمان</div>
+      </div>
+    </div>
+
+    <button id="setWebhookBtn" class="action-btn" onclick="activateWebhook()">
+      ⚡ تفعيل وتحديث Webhook تلجرام بنقرة واحدة
+    </button>
+
+    <div id="resultBox" class="result-box"></div>
+
+    <div class="footer">
+      نظام التشغيل: <b>Node.js (grammY Framework)</b> | الاستضافة: <b>Netlify.com</b>
+    </div>
+  </div>
+
+  <script>
+    async function activateWebhook() {
+      const btn = document.getElementById('setWebhookBtn');
+      const box = document.getElementById('resultBox');
+      btn.disabled = true;
+      btn.innerText = "⏳ جاري الربط مع سيرفرات تلجرام...";
+
+      try {
+        const res = await fetch('/api/set-webhook');
+        const data = await res.json();
+        box.style.display = 'block';
+        box.innerText = JSON.stringify(data, null, 2);
+        if (data.success) {
+          btn.style.background = '#10b981';
+          btn.innerText = "✅ تم تفعيل الـ Webhook بنجاح تام!";
+        } else {
+          btn.innerText = "❌ حدث خطأ، راجع التفاصيل أدناه";
+        }
+      } catch (err) {
+        box.style.display = 'block';
+        box.innerText = "Error: " + err.message;
+        btn.innerText = "❌ تعذر الاتصال بـ Netlify Function";
+      } finally {
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
