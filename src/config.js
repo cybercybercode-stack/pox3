@@ -6,9 +6,9 @@ const path = require("path");
 require("dotenv").config();
 
 // توكن البوت وقاعدة البيانات
-const BOT_TOKEN = process.env.BOT_TOKEN || "6230762566:AAENoNrNkvu1yHJhbsIyvfJHHD3sdUAfbk8";
+const BOT_TOKEN = process.env.BOT_TOKEN || "";
 const DATABASE_URL = process.env.DATABASE_URL || 
-  "postgresql://neondb_owner:npg_jYFkGRe4ru5m@ep-orange-waterfall-b5doez4m-pooler.c-7.us-east-2.aws.neon.tech/layal?sslmode=require&channel_binding=require";
+  "";
 
 // كلمة سر المشرفين البديلة لتسجيل الدخول السريع
 const ADMIN_SECRET_PIN = process.env.ADMIN_PIN || "lokerpox2026";
