@@ -6,6 +6,11 @@
 const bot = require("../../src/bot");
 
 exports.handler = async (event, context) => {
+  // منع تعليق الدالة بسبب اتصالات قاعدة البيانات الخاملة في بيئة Serverless
+  if (context) {
+    context.callbackWaitsForEmptyEventLoop = false;
+  }
+
   // عند زيارة الرابط من المتصفح (GET) للتأكد من سلامة التشغيل
   if (event.httpMethod === "GET") {
     return {
@@ -26,6 +31,11 @@ exports.handler = async (event, context) => {
     try {
       if (!event.body) {
         return { statusCode: 400, body: "Bad Request: Empty Body" };
+      }
+
+      // التأكد من تهيئة البوت
+      if (!bot.isInited()) {
+        await bot.init();
       }
 
       const update = typeof event.body === "string" ? JSON.parse(event.body) : event.body;
