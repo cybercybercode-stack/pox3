@@ -29,8 +29,20 @@ const {
   cancelKb,
 } = require("./keyboards");
 
-// إنشاء كائن البوت مع خيارات ParseMode = HTML افتراضياً
-const bot = new Bot(BOT_TOKEN);
+// إنشاء كائن البوت مع خيارات ParseMode = HTML واختصار botInfo لبيئات الـ Serverless
+const bot = new Bot(BOT_TOKEN, {
+  botInfo: {
+    id: 6230762566,
+    is_bot: true,
+    first_name: "لوحة تحكم",
+    username: "wwdfddgbot",
+    can_join_groups: true,
+    can_read_all_group_messages: false,
+    supports_inline_queries: false,
+    can_connect_to_business: false,
+    has_main_web_app: false,
+  }
+});
 
 // ==========================================
 // وسيط التحقق الأمني من المشرفين وحفظ الجلسات
